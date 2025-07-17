@@ -1,11 +1,14 @@
-CODE_CHANGES = getGitChanges()
+def CODE_CHANGES = getGitChanges()
 pipeline {
     agent any
+    environment {
+        BRANCH_NAME = env.BRANCH_NAME ?: '' // fallback if not set
+    }
     stages {
         stage('Build') {
             when {
                 expression {
-                    BRANCH_NAME = 'main' && CODE_CHANGES = true
+                    return BRANCH_NAME == 'main' && CODE_CHANGES
                 }
             }
             steps {
@@ -16,7 +19,7 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    BRANCH_NAME = ''
+                    return BRANCH_NAME != ''
                 }
             }
             steps {
@@ -33,5 +36,3 @@ pipeline {
         }
     }
 }
-          
-          
