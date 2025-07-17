@@ -1,20 +1,10 @@
-pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-        echo 'building the application...'
+CODE_CHANGE = getGitChanges()
+pipline {
+  agent any 
+  stages{
+    stage('built'){
+      when {
+        expression {
+          BRANCH_NAME == 'master' && CODE_CHANGES ==true
+        }
       }
-    }
-    stage('test') {
-      steps {
-        echo 'testing the application...'
-      }
-    }
-    stage('deploy') {
-      steps {
-        echo 'deploying the application...'
-      }
-    }
-  }
-}
