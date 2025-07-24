@@ -1,4 +1,4 @@
-def CODE_CHANGES = getGitChanges()
+first CODE_CHANGES = true
 pipeline {
     agent any
     environment {
